@@ -1,0 +1,93 @@
+#include &lt;stdio.h&gt;
+#include&lt;conio.h&gt;
+#define MAX 100
+typedef struct {
+int id, issued;
+char title[60], author[50], category[30];
+float price;
+} Book;
+int main(void) {
+Book b[MAX];
+int n = 0, ch, i, id, found;
+do {
+printf(&quot;\n--- LIBRARY MANAGEMENT SYSTEM ---\n&quot;);
+printf(&quot;1.Add 2.Display 3.Search 4.Issue\n&quot;);
+printf(&quot;5.Return 6.Available 7.Issued 0.Exit\n&quot;);
+printf(&quot;Choice: &quot;);
+scanf(&quot;%d&quot;, &amp;ch);
+if (ch == 1) {
+if (n &gt;= MAX) {
+printf(&quot;Library full.\n&quot;);
+continue;
+} printf(&quot;ID: &quot;);
+scanf(&quot;%d&quot;, &amp;b[n].id);
+printf(&quot;Title: &quot;);
+scanf(&quot;%59s&quot;, b[n].title);
+printf(&quot;Author: &quot;);
+scanf(&quot;%49s&quot;, b[n].author);
+printf(&quot;Category: &quot;);
+scanf(&quot;%29s&quot;, b[n].category);
+printf(&quot;Price: &quot;);
+
+7
+
+scanf(&quot;%f&quot;, &amp;b[n].price);
+b[n++].issued = 0;
+printf(&quot;Book added.\n&quot;);
+}
+else if (ch == 2 || ch == 6 || ch == 7) {
+found = 0
+for (i = 0; i &lt; n; i++) {
+if (ch == 6 &amp;&amp; b[i].issued) continue;
+if (ch == 7 &amp;&amp; !b[i].issued) continue;
+printf(&quot;\nID:%d Title:%s Author:%s\n&quot;,
+b[i].id, b[i].title, b[i].author);
+printf(&quot;Category:%s Price:Rs.%.2f Status:%s\n&quot;,
+b[i].category, b[i].price,
+b[i].issued ? &quot;Issued&quot; : &quot;Available&quot;);
+found = 1;
+}
+if (!found) printf(&quot;No matching books.\n&quot;);
+}
+else if (ch &gt;= 3 &amp;&amp; ch &lt;= 5) {
+printf(&quot;Enter Book ID: &quot;);
+scanf(&quot;%d&quot;, &amp;id);
+found = 0;
+for (i = 0; i &lt; n; i++) {
+if (b[i].id == id) {
+found = 1;
+if (ch == 3) {
+printf(&quot;%d %s %s %s Rs.%.2f %s\n&quot;,
+b[i].id, b[i].title, b[i].author,
+b[i].category, b[i].price,
+b[i].issued ? &quot;Issued&quot; : &quot;Available&quot;);
+}
+else if (ch == 4) {
+if (!b[i].issued) {
+
+8
+
+b[i].issued = 1;
+printf(&quot;Book issued.\n&quot;);
+} else printf(&quot;Already issued.\n&quot;);
+}
+else {
+if (b[i].issued) {
+b[i].issued = 0;
+printf(&quot;Book returned.\n&quot;);
+} else printf(&quot;Book was not issued.\n&quot;);
+}
+break;
+}
+}
+if (!found) printf(&quot;Book not found.\n&quot;);
+}
+else if (ch == 0) {
+printf(&quot;Exiting system.\n&quot;);
+}
+else {
+printf(&quot;Invalid choice.\n&quot;);
+}
+} while (ch != 0);
+return 0;
+}
